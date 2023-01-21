@@ -1,12 +1,6 @@
 import {
   Box,
   Divider,
-  FormControl,
-  InputLabel,
-  MenuItem,
-  Select,
-  SelectChangeEvent,
-  TextField,
   Typography,
 } from "@mui/material";
 import "./Sidebar.scss";
@@ -17,9 +11,14 @@ const outputPlaylists = ["kinky", "kelvin", "kitten", "king"];
 
 export default function Sidebar() {
   const [outputPlaylist, setOutputPlaylist] = useState("kinky");
+  const [inputPlaylist, setInputPlaylist] = useState("kinky");
 
-  function handlePlaylistOutput(e: any) {
+  function handleOutputPlaylist(e: any) {
     setOutputPlaylist(e.target.outerText);
+  }
+  
+  function handleInputPlaylist(e: any) {
+    setInputPlaylist(e.target.outerText);
   }
 
   return (
@@ -41,7 +40,7 @@ export default function Sidebar() {
             {outputPlaylists.map((playlist) => (
               <Box
                 className="options"
-                onClick={handlePlaylistOutput}
+                onClick={handleOutputPlaylist}
                 key={`output_playlist_${playlist}`}
               >
                 <Typography
@@ -72,19 +71,19 @@ export default function Sidebar() {
             {outputPlaylists.map((playlist) => (
               <Box
                 className="options"
-                onClick={handlePlaylistOutput}
+                onClick={handleInputPlaylist}
                 key={`output_playlist_${playlist}`}
               >
                 <Typography
                   className={
-                    playlist === outputPlaylist
+                    playlist === inputPlaylist
                       ? "selected_options"
                       : "not_selected_options"
                   }
                 >
                   {playlist}
                 </Typography>
-                {playlist === outputPlaylist ? (
+                {playlist === inputPlaylist ? (
                   <RiCheckFill color="white" />
                 ) : null}
               </Box>
