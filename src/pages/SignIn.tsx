@@ -3,15 +3,12 @@ import { BsSpotify } from "react-icons/bs";
 import { Box, Button, Modal } from "@mui/material";
 import Typography from "@mui/material/Typography";
 import "./SignIn.scss";
-import { useState } from "react";
 
 export default function SignIn({}) {
-  const [open, setOpen] = useState(false);
-  const [spotifyUrl, setSpotifyUrl] = useState("");
   async function signIn() {
     const response = await fetch("http://localhost:3000/");
-    setOpen(true);
-    window.open((await response.json()).url, "_blank", "noreferrer");
+    const link = (await response.json()).url;
+    window.open(link, "_blank", "noreferrer");
   }
 
   return (

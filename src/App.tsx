@@ -7,14 +7,19 @@ import { ThemeProvider } from "@emotion/react";
 import theme from "./theme";
 import SignIn from "./pages/SignIn";
 import MainPage from "./pages/MainPage";
+import { useEffect, useState } from "react";
 
 function App() {
+  const [user, setUser] = useState(false);
+
+  useEffect(() => {
+    const searchParams = new URLSearchParams(document.location.search);
+    searchParams.get("code") && setUser(true);
+  }, []);
+
   return (
     <ThemeProvider theme={theme}>
-      <div className="App">
-        <SignIn />
-        {/* <MainPage /> */}
-      </div>
+      <div className="App">{user ? <MainPage /> : <SignIn />}</div>
     </ThemeProvider>
   );
 }
