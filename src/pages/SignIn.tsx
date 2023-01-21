@@ -2,7 +2,7 @@ import Logo from "../components/Logo";
 import { BsSpotify } from "react-icons/bs";
 import { Button } from "@mui/material";
 import Typography from "@mui/material/Typography";
-import "../styles.scss";
+import "./SignIn.scss";
 
 export default function SignIn({}) {
   return (

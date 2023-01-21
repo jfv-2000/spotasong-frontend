@@ -1,17 +1,18 @@
 // LOGO ---------------------------------------------------
-.logo{
+.logo {
   width: 100px;
   object-fit: contain;
 }
 
 // SIDEBAR -----------------------------------------------
-.sidebar_menu{
+.sidebar_menu {
   background-color: #242424;
   width: 25vw;
   height: 100vh;
+  flex: 1;
 }
 
-.sidebar_header{
+.sidebar_header {
   background-color: #131313;
   height: 45px;
   display: flex;
@@ -19,38 +20,21 @@
   padding: 2px 10px;
 }
 
-.sidebar_name{
+.sidebar_name {
   color: white;
 }
 
-.sidebar_logo{
+.sidebar_logo {
   width: 30px;
   height: 30px;
   margin-right: 10px;
 }
 
-.sidebar_body{
+.sidebar_body {
   padding: 10px;
 }
 
-.sidebar_divider{
+.sidebar_divider {
   color: white;
   border: 2px solid white;
-.title {
-  font-weight: 500 !important;
-  color: white;
-}
-
-.logo-title-container {
-  display: flex;
-  align-items: center;
-  gap: 15px;
-}
-
-.sign-in-container {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  gap: 30px;
 }
