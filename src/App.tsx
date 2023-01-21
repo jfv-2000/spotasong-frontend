@@ -5,12 +5,23 @@ import "@fontsource/roboto/500.css";
 import "@fontsource/roboto/700.css";
 import { ThemeProvider } from "@emotion/react";
 import theme from "./theme";
+import { Button } from "@mui/material";
+import { BsSpotify } from "react-icons/bs";
+import Bar from "./components/Bar";
 
 function App() {
   return (
     <ThemeProvider theme={theme}>
       <div className="App">
-        <p>thisis a test</p>
+        <Bar />
+        <Button
+          className="login-button"
+          variant="contained"
+          startIcon={<BsSpotify />}
+        >
+          Log in with Spotify
+        </Button>
+        <p>hi</p>
       </div>
     </ThemeProvider>
   );
