@@ -5,7 +5,6 @@ import "@fontsource/roboto/500.css";
 import "@fontsource/roboto/700.css";
 import { ThemeProvider } from "@emotion/react";
 import theme from "./theme";
-
 import SignIn from "./pages/SignIn";
 import MainPage from "./pages/MainPage";
 
