@@ -31,26 +31,55 @@
 
 .sidebar_body{
   padding: 10px;
+  color: white;
+}
+
+.sidebar_section{
+  margin: 10px 0;
 }
 
 .sidebar_divider{
-  color: white;
-  border: 2px solid white;
-.title {
-  font-weight: 500 !important;
+  background-color: #323232;
+  height: 1px;
+}
+
+.sidebar_section_body{
+  padding: 0 10px;
+}
+
+.sidebar_section_title{
+  padding: 0 10px;
+  padding: 0px 5px;
+  display: flex;
+  align-items: center;
+}
+
+.sidebar_section_title_text{
+  font-size: 50px;
+}
+
+#add_to_playlist_dropdown{
   color: white;
 }
 
-.logo-title-container {
-  display: flex;
-  align-items: center;
-  gap: 15px;
+.selected_options{
+  color: white;
+  padding: 5px;
 }
 
-.sign-in-container {
+.not_selected_options{
+  padding: 5px;
+
+}
+
+.options{
   display: flex;
-  flex-direction: column;
-  justify-content: center;
   align-items: center;
-  gap: 30px;
+  justify-content: space-between;
+  &:hover{
+    cursor: pointer;
+    color: white;
+  }
+  color:rgb(117, 117, 117);
+
 }
