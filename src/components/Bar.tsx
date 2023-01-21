@@ -4,9 +4,7 @@ import Logo from "./Logo";
 export default function Bar({}) {
   return (
     <AppBar position="fixed">
-      <Toolbar>
-        <Logo />
-      </Toolbar>
+      <Toolbar></Toolbar>
     </AppBar>
   );
 }
