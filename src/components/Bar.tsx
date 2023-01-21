@@ -5,7 +5,7 @@ export default function Bar({}) {
   return (
     <AppBar position="fixed">
       <Toolbar>
-        <Logo />
+        <Logo width={40} height={40} />
       </Toolbar>
     </AppBar>
   );
