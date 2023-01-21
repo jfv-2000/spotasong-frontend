@@ -9,19 +9,13 @@ import { Box, Button } from "@mui/material";
 import { BsSpotify } from "react-icons/bs";
 import Bar from "./components/Bar";
 import Sidebar from "./components/Sidebar";
+import SignIn from "./pages/SignIn";
 
 function App() {
   return (
     <ThemeProvider theme={theme}>
       <div className="App">
-        {/* <Bar /> */}
-        {/* <Button
-          className="login-button"
-          variant="contained"
-          startIcon={<BsSpotify />}
-        >
-          Log in with Spotify
-        </Button> */}
+        <SignIn />
         <Sidebar/>
       </div>
     </ThemeProvider>

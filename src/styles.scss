@@ -36,4 +36,21 @@
 .sidebar_divider{
   color: white;
   border: 2px solid white;
+.title {
+  font-weight: 500 !important;
+  color: white;
+}
+
+.logo-title-container {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+}
+
+.sign-in-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 30px;
 }
