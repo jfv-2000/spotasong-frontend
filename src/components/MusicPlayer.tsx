@@ -8,6 +8,7 @@ import { CircularProgress } from "@mui/material";
 import useAudio from "../useAudio";
 import { useCallback, useEffect, useState } from "react";
 import { useStopwatch } from "react-timer-hook";
+import { useAutoAnimate } from "@formkit/auto-animate/react";
 
 export default function MusicPlayer({
   user,
@@ -19,6 +20,7 @@ export default function MusicPlayer({
   toAdd: string;
 }) {
   const [index, setIndex] = useState(0);
+  const [parent, enableAnimations] = useAutoAnimate();
   const { seconds, start, pause, reset } = useStopwatch({ autoStart: false });
 
   function songRefused() {
@@ -27,7 +29,6 @@ export default function MusicPlayer({
   }
   async function songAdded() {
     if (songs.length !== 0 && songs.length !== index + 1) {
-      console.log({ playlist: toAdd, song: songs[index].id });
       setIndex((prev) => prev + 1);
       const response = await fetch(
         "http://localhost:3000/addToPlaylist/" + toAdd + "/" + songs[index].uri
@@ -75,7 +76,7 @@ export default function MusicPlayer({
     }
   }, [index, songs]);
 
-  let musicPlayerElement = <></>;
+  let musicPlayerElement = null;
   if (songs.length === 0) {
     musicPlayerElement = (
       <>

@@ -29,7 +29,7 @@ export default function Sidebar({
   const [inputPlaylist, setInputPlaylist] = useState(null);
 
   async function handleOutputPlaylist(e: any, id: string) {
-    if (e.target.outerText !== inputPlaylist) {
+    if (e.target.outerText !== outputPlaylist) {
       setOutputPlaylist(e.target.outerText);
       setToAdd(id);
     }

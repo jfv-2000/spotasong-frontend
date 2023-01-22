@@ -10,7 +10,6 @@ import "./MainPage.scss";
 export default function MainPage({ user }: { user: boolean }) {
   const [songs, setSongs] = useState([]);
   const [toAdd, setToAdd] = useState("");
-
   const webcamRef = React.useRef(null);
   const [imgSrc, setImgSrc] = useState("");
   const [checked, setChecked] = useState(true);
