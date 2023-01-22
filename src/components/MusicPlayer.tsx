@@ -12,9 +12,9 @@ import { HiHeart } from "react-icons/hi";
 import { RxCross1, RxPause, RxPlay } from "react-icons/rx";
 import { SlSocialSpotify } from "react-icons/sl";
 import { useStopwatch } from "react-timer-hook";
-import { useAutoAnimate } from "@formkit/auto-animate/react";
 import useAudio from "../useAudio";
 import "./MusicPlayer.scss";
+import CrossfadeImage from "react-crossfade-image";
 
 export default function MusicPlayer({
   songs,
@@ -27,7 +27,6 @@ export default function MusicPlayer({
   index: number;
   setIndex: Dispatch<SetStateAction<number>>;
 }) {
-  const [parent, enableAnimations] = useAutoAnimate();
   const { seconds, start, pause, reset } = useStopwatch({ autoStart: false });
 
   function songRefused() {
@@ -84,7 +83,10 @@ export default function MusicPlayer({
   } else {
     musicPlayerElement = (
       <>
-        <img className="song-cover" src={songs[index].album.images[0].url} />
+        <CrossfadeImage
+          className="song-cover"
+          src={songs[index].album.images[0].url}
+        />
         <div className="song-information">
           <div style={{ flex: 4 }}>
             <Typography variant="h4" color="white">
