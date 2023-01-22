@@ -67,12 +67,6 @@ export default function MainPage({
   async function songAdded() {
     if (songs.length !== 0 && songs.length !== index + 1) {
       setIndex((prev) => prev + 1);
-      const response = await fetch(
-        "https://spot-a-song-service.onrender.com/addToPlaylist/" +
-          toAdd +
-          "/" +
-          songs[index].uri
-      );
     }
   }
 
@@ -81,7 +75,7 @@ export default function MainPage({
   }, [songs]);
 
   function getEmotion() {
-    const imgSrc = webcamRef.current.getScreenshot();
+    const imgSrc = (webcamRef.current as any).getScreenshot();
     axios
       .post(`https://spot-a-song-service.onrender.com/emotions`, { imgSrc })
       .then((res) => {
@@ -113,8 +107,6 @@ export default function MainPage({
   const onTouchEnd = () => {
     if (!touchStart || !touchEnd) return;
     const distance = touchStart - touchEnd;
-    const isLeftSwipe = distance > minSwipeDistance;
-    const isRightSwipe = distance < -minSwipeDistance;
   };
 
   const videoConstraints = {
@@ -169,15 +161,11 @@ export default function MainPage({
           width={1280}
           videoConstraints={videoConstraints}
         >
-          {({ getScreenshot }: { getScreenshot: any }) => (
-            <button
-              onClick={() => {
-                const imageSrc = getScreenshot();
-              }}
-            >
-              Capture photo
-            </button>
-          )}
+          {
+            (({ getScreenshot }: { getScreenshot: any }) => (
+              <button onClick={() => {}}>Capture photo</button>
+            )) as any
+          }
         </Webcam>
       </Box>
       <AiOutlineDotChart

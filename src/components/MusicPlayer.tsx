@@ -12,8 +12,8 @@ import { HiHeart } from "react-icons/hi";
 import { RxCross1, RxPause, RxPlay } from "react-icons/rx";
 import { SlSocialSpotify } from "react-icons/sl";
 import { useStopwatch } from "react-timer-hook";
-import useAudio from "../useAudio";
 import "./MusicPlayer.scss";
+// @ts-ignore
 import CrossfadeImage from "react-crossfade-image";
 
 export default function MusicPlayer({
@@ -40,27 +40,27 @@ export default function MusicPlayer({
 
   useEffect(() => {
     if (audio) {
-      audio.addEventListener("ended", audio.play());
+      (audio as any).addEventListener("ended", (audio as any).play());
       return () => {
-        audio.removeEventListener("ended", audio.pause());
+        (audio as any).removeEventListener("ended", (audio as any).pause());
       };
     }
   }, [audio, songs]);
 
   function pauseAudio() {
     pause();
-    audio.pause();
+    (audio as any).pause();
   }
 
   function playAudio() {
     start();
-    audio.play();
+    (audio as any).play();
   }
 
   useEffect(() => {
     if (songs.length !== 0) {
       reset();
-      setAudio(new Audio(songs[index].preview_url));
+      setAudio(new Audio(songs[index].preview_url) as any);
     }
   }, [index, songs]);
 

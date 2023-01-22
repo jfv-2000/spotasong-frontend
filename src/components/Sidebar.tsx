@@ -20,7 +20,7 @@ export default function Sidebar({
 }: {
   user: boolean;
   songs: any[];
-  setSongs: Dispatch<SetStateAction<any[]>>;
+  setSongs: Dispatch<SetStateAction<never[]>>;
   setToAdd: Dispatch<SetStateAction<string>>;
   checked: boolean;
   handleToggleCamera: (event: ChangeEvent<HTMLInputElement>) => void;
