@@ -1,7 +1,7 @@
-import { Box, Divider, Typography } from "@mui/material";
-import "./Sidebar.scss";
-import { RiPlayListFill, RiFilter2Fill, RiCheckFill } from "react-icons/ri";
+import { Box, Divider, Switch, Typography } from "@mui/material";
 import { Dispatch, SetStateAction, useEffect, useState } from "react";
+import { RiCheckFill, RiFilter2Fill, RiPlayListFill } from "react-icons/ri";
+import "./Sidebar.scss";
 
 export default function Sidebar({
   user,
@@ -16,6 +16,8 @@ export default function Sidebar({
   const [outputPlaylist, setOutputPlaylist] = useState(null);
   const [inputPlaylist, setInputPlaylist] = useState(null);
 
+  const [checked, setChecked] = useState(true);
+
   async function handleOutputPlaylist(e: any) {
     // const response = await fetch("http://localhost:3000/getUserPlaylists");
     // setSongs([]);
@@ -25,6 +27,11 @@ export default function Sidebar({
 
   function handleInputPlaylist(e: any) {
     setInputPlaylist(e.target.outerText);
+  }
+
+  function handleToggleCamera(event: React.ChangeEvent<HTMLInputElement>) {
+    setChecked(event.target.checked);
+    console.log(event.target.checked);
   }
 
   useEffect(() => {
@@ -46,6 +53,7 @@ export default function Sidebar({
         <Box className="sidebar_header">
         <img src="/src/assets/logo.png" className="sidebar_logo" />
         <Typography className="sidebar_name">Spot-A-Song</Typography>
+        <Switch defaultChecked checked={checked} onChange={handleToggleCamera} />
       </Box>
       <Box className="sidebar_body">
         <Box className="sidebar_section">
