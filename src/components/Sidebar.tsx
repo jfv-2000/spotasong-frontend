@@ -17,14 +17,18 @@ export default function Sidebar({
   const [inputPlaylist, setInputPlaylist] = useState(null);
 
   async function handleOutputPlaylist(e: any) {
-    // const response = await fetch("http://localhost:3000/getUserPlaylists");
-    // setSongs([]);
     setOutputPlaylist(e.target.outerText);
-    // setSongs(await response.json());
   }
 
-  function handleInputPlaylist(e: any) {
-    setInputPlaylist(e.target.outerText);
+  async function handleInputPlaylist(e: any, id: string) {
+    if (e.target.outerText !== inputPlaylist) {
+      setSongs([]);
+      setInputPlaylist(e.target.outerText);
+      const response = await fetch(
+        "http://localhost:3000/getRecByPlaylist/" + id
+      );
+      setSongs((await response.json()).allRecs);
+    }
   }
 
   useEffect(() => {
@@ -36,6 +40,10 @@ export default function Sidebar({
         setOutputPlaylist(fetchedPlaylists[0].name);
         setInputPlaylist(fetchedPlaylists[0].name);
         setToAdd(fetchedPlaylists[0].id);
+        handleInputPlaylist(
+          { target: { outerText: fetchedPlaylists[0].name } },
+          fetchedPlaylists[0].id
+        );
       })();
     }
   }, []);
@@ -88,7 +96,7 @@ export default function Sidebar({
             {playlists.map(({ name, id }) => (
               <Box
                 className="options"
-                onClick={handleInputPlaylist}
+                onClick={(e) => handleInputPlaylist(e, id)}
                 key={`output_playlist_${name}`}
               >
                 <Typography
