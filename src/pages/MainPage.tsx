@@ -59,7 +59,7 @@ export default function MainPage({
     if (checked) {
       const interval = setInterval(() => {
         getEmotion();
-      }, 3000);
+      }, 2000);
       return () => clearInterval(interval); // This represents the unmount function, in which you need to clear your interval to prevent memory leaks.
     }
   }, [checked]);
