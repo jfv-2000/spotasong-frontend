@@ -1,6 +1,6 @@
 import { Box } from "@mui/system";
 import axios from "axios";
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import Webcam from "react-webcam";
 import HiddenWebcamImage from "../components/HiddenWebcamImage";
 import MusicPlayer from "../components/MusicPlayer";
@@ -11,12 +11,21 @@ export default function MainPage({ user }: { user: boolean }) {
   const [songs, setSongs] = useState<any[]>([]);
   const [toAdd, setToAdd] = useState("");
   const [index, setIndex] = useState(0);
-
   const webcamRef = React.useRef(null);
   const [imgSrc, setImgSrc] = useState("");
   const [checked, setChecked] = useState(true);
   const [event, setEvent] =
     useState<React.ChangeEvent<HTMLInputElement> | null>(null);
+
+  useEffect(() => {
+    if (checked) {
+      const interval = setInterval(() => {
+        // console.log("Logs every secs");
+        getEmotion();
+      }, 1000);
+      return () => clearInterval(interval); // This represents the unmount function, in which you need to clear your interval to prevent memory leaks.
+    }
+  }, [checked]);
 
   async function songAdded() {
     if (songs.length !== 0 && songs.length !== index + 1) {
@@ -29,6 +38,7 @@ export default function MainPage({ user }: { user: boolean }) {
   }
 
   function getEmotion() {
+    console.log("get emotion called");
     capture();
     axios.post(`http://localhost:3000/emotions`, { imgSrc }).then((res) => {
       const yay = res.data.surprise || res.data.joy;
