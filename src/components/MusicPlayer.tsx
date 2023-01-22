@@ -83,10 +83,10 @@ export default function MusicPlayer({
   } else {
     musicPlayerElement = (
       <>
-        <CrossfadeImage
-          className="song-cover"
-          src={songs[index].album.images[0].url}
-        />
+        <div className="song-cover">
+          <CrossfadeImage src={songs[index].album.images[0].url} />
+        </div>
+
         <div className="song-information">
           <div style={{ flex: 4 }}>
             <Typography variant="h4" color="white">

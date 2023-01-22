@@ -70,13 +70,11 @@ export default function Sidebar({
           <img src="/src/assets/logo.png" className="sidebar_logo" />
           <Typography className="sidebar_name">Spot-A-Song</Typography>
         </Box>
-        <Box>
-          <Switch
-            defaultChecked
-            checked={checked}
-            onChange={handleToggleCamera}
-          />
-        </Box>
+        <Switch
+          defaultChecked
+          checked={checked}
+          onChange={handleToggleCamera}
+        />
       </Box>
       <Box className="sidebar_body">
         <Box className="sidebar_section">

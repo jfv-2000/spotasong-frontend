@@ -21,7 +21,7 @@
   padding: 2px 10px;
 }
 
-.sidebar_title{
+.sidebar_title {
   display: flex;
   align-items: center;
 }
@@ -93,4 +93,8 @@
   }
   color: rgb(117, 117, 117);
   overflow: hidden;
+}
+
+.MuiSwitch-track {
+  background-color: #2f622a !important;
 }
