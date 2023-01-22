@@ -8,10 +8,11 @@ import "./App.scss";
 import MainPage from "./pages/MainPage";
 import theme from "./theme";
 import SignIn from "./pages/SignIn";
+import BubbleChart from "./components/BubbleChart";
 
 function App() {
   const [user, setUser] = useState(false);
-
+  const [topPlaylistGenres, setTopPlaylistGenres] = useState([]);
   useEffect(() => {
     (async function () {
       const searchParams = new URLSearchParams(document.location.search);
@@ -23,11 +24,14 @@ function App() {
         setUser(true);
       }
     })();
+
   }, []);
 
   return (
     <ThemeProvider theme={theme}>
-      <div className="App">{user ? <MainPage user={user} /> : <SignIn />}</div>
+      {/* <div className="App">{user ? <MainPage user={user} /> : <SignIn />}</div> */}
+      <BubbleChart/>
+      <div className="App"></div>
     </ThemeProvider>
   );
 }
