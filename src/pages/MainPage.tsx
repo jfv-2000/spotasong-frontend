@@ -1,28 +1,34 @@
+import { Box } from "@mui/system";
+import axios from "axios";
+import React, { useState } from "react";
+import Webcam from "react-webcam";
 import HiddenWebcamImage from "../components/HiddenWebcamImage";
 import MusicPlayer from "../components/MusicPlayer";
 import Sidebar from "../components/Sidebar";
 import "./MainPage.scss";
-import Webcam from "react-webcam";
-import { useEffect, useState } from "react";
-import React from "react";
-import axios from "axios";
 
-export default function MainPage({}) {
+export default function MainPage({ user }: { user: boolean }) {
+  const [songs, setSongs] = useState([]);
+  const [toAdd, setToAdd] = useState("");
+
   const webcamRef = React.useRef(null);
   const [imgSrc, setImgSrc] = useState("");
-  function getEmotion(){
-    capture();
-    console.log(imgSrc)
-    axios.post(`http://localhost:3000/emotions`, {imgSrc})
-    .then(res => {
-      console.log(res)
-    })
-  }
 
+  function getEmotion() {
+    capture();
+    axios.post(`http://localhost:3000/emotions`, { imgSrc }).then((res) => {
+      const yay = (res.data.surprise || res.data.joy);
+      if (yay) {
+        console.log("Add song to playlist!?");
+      } else {
+        console.log("That was mid");
+      }
+      console.log(res.data);
+    });
+  }
   const capture = React.useCallback(() => {
     const imageSrc = webcamRef.current.getScreenshot();
     setImgSrc(imageSrc);
-    console.log(imgSrc)
   }, [webcamRef, setImgSrc]);
 
   // useEffect(() => {
@@ -33,19 +39,22 @@ export default function MainPage({}) {
   //   return () => clearInterval(interval); // This represents the unmount function, in which you need to clear your interval to prevent memory leaks.
   // }, [])
 
+  
   return (
     <div className="main-page">
-      {/* <Sidebar />
-      <MusicPlayer /> */}
-      <div className="lyrics">hi</div>
-      <Webcam mirrored audio={false} screenshotFormat="image/jpeg" ref={webcamRef}/>
-      <button onClick={getEmotion}>Capture photo</button>
-
-      {imgSrc && (
-        <img
-          src={imgSrc}
+      <Sidebar user={user} setSongs={setSongs} setToAdd={setToAdd} />
+      <MusicPlayer user={user} songs={songs} toAdd={toAdd} />
+      <Box hidden={true}>
+        <HiddenWebcamImage />
+        <Webcam
+          mirrored
+          audio={false}
+          screenshotFormat="image/jpeg"
+          ref={webcamRef}
         />
-      )}
+        <button onClick={getEmotion}>Capture photo</button>
+        {imgSrc && <img src={imgSrc} />}
+      </Box>
     </div>
   );
 }

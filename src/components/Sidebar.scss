@@ -31,8 +31,13 @@
 }
 
 .sidebar_body {
-  padding: 10px;
   color: white;
+  overflow: hidden;
+  overflow-y: auto;
+  overflow-x: hidden;
+  max-height: calc(100vh - 45px);
+  scrollbar-width: thin; /* "auto" or "thin" */
+  scrollbar-color: #1db954 #323232; /* scroll thumb and track */
 }
 
 .sidebar_section {
@@ -81,4 +86,5 @@
     color: white;
   }
   color: rgb(117, 117, 117);
+  overflow: hidden;
 }
