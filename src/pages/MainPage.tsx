@@ -29,7 +29,6 @@ export default function MainPage({ user }: { user: boolean }) {
 
   async function songAdded() {
     if (songs.length !== 0 && songs.length !== index + 1) {
-      console.log({ playlist: toAdd, song: songs[index].id });
       setIndex((prev) => prev + 1);
       const response = await fetch(
         "http://localhost:3000/addToPlaylist/" + toAdd + "/" + songs[index].uri
@@ -72,8 +71,36 @@ export default function MainPage({ user }: { user: boolean }) {
     console.log("toggleOn", event.target.checked);
   }
 
+  const [touchStart, setTouchStart] = useState(null);
+  const [touchEnd, setTouchEnd] = useState(null);
+
+  // the required distance between touchStart and touchEnd to be detected as a swipe
+  const minSwipeDistance = 50;
+
+  const onTouchStart = (e) => {
+    setTouchEnd(null); // otherwise the swipe is fired even with usual touch events
+    setTouchStart(e.targetTouches[0].clientX);
+  };
+
+  const onTouchMove = (e) => setTouchEnd(e.targetTouches[0].clientX);
+
+  const onTouchEnd = () => {
+    if (!touchStart || !touchEnd) return;
+    const distance = touchStart - touchEnd;
+    const isLeftSwipe = distance > minSwipeDistance;
+    const isRightSwipe = distance < -minSwipeDistance;
+    if (isLeftSwipe || isRightSwipe)
+      console.log("swipe", isLeftSwipe ? "left" : "right");
+    // add your conditional logic here
+  };
+
   return (
-    <div className="main-page">
+    <div
+      className="main-page"
+      onTouchStart={onTouchStart}
+      onTouchMove={onTouchMove}
+      onTouchEnd={onTouchEnd}
+    >
       <Sidebar
         user={user}
         songs={songs}
@@ -83,9 +110,7 @@ export default function MainPage({ user }: { user: boolean }) {
         handleToggleCamera={handleToggleCamera}
       />
       <MusicPlayer
-        user={user}
         songs={songs}
-        toAdd={toAdd}
         songAdded={songAdded}
         index={index}
         setIndex={setIndex}
