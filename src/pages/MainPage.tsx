@@ -1,17 +1,17 @@
+import axios from "axios";
+import React, { useState } from "react";
+import Webcam from "react-webcam";
 import HiddenWebcamImage from "../components/HiddenWebcamImage";
 import MusicPlayer from "../components/MusicPlayer";
 import Sidebar from "../components/Sidebar";
 import "./MainPage.scss";
-import Webcam from "react-webcam";
-import { useEffect, useState } from "react";
-import React from "react";
-import axios from "axios";
 
 export default function MainPage({ user }: { user: boolean }) {
-  const webcamRef = React.useRef(null);
-  const [imgSrc, setImgSrc] = useState("");
   const [songs, setSongs] = useState([]);
   const [toAdd, setToAdd] = useState("");
+
+  const webcamRef = React.useRef(null);
+  const [imgSrc, setImgSrc] = useState("");
 
   function getEmotion() {
     capture();
