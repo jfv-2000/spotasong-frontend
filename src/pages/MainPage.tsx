@@ -78,7 +78,8 @@ export default function MainPage({
 
   function getEmotion() {
     console.log("get emotion called");
-    capture();
+    const imgSrc = webcamRef.current.getScreenshot();
+    console.log("img src", imgSrc);
     axios.post(`http://localhost:3000/emotions`, { imgSrc }).then((res) => {
       const yay = res.data.surprise || res.data.joy;
       if (yay) {
@@ -90,11 +91,6 @@ export default function MainPage({
       console.log(res.data);
     });
   }
-
-  const capture = React.useCallback(() => {
-    const imageSrc = webcamRef.current.getScreenshot();
-    setImgSrc(imageSrc);
-  }, [webcamRef, setImgSrc]);
 
   function handleToggleCamera(event: React.ChangeEvent<HTMLInputElement>) {
     setChecked(event.target.checked);
@@ -124,6 +120,12 @@ export default function MainPage({
     if (isLeftSwipe || isRightSwipe)
       console.log("swipe", isLeftSwipe ? "left" : "right");
     // add your conditional logic here
+  };
+
+  const videoConstraints = {
+    width: 1280,
+    height: 720,
+    facingMode: "user",
   };
 
   return (
@@ -162,15 +164,23 @@ export default function MainPage({
         </Box>
       )}
       <Box hidden={true}>
-        <HiddenWebcamImage />
         <Webcam
-          mirrored
           audio={false}
+          height={720}
           screenshotFormat="image/jpeg"
-          ref={webcamRef}
-        />
-        <button onClick={getEmotion}>Capture photo</button>
-        {imgSrc && <img src={imgSrc} />}
+          width={1280}
+          videoConstraints={videoConstraints}
+        >
+          {({ getScreenshot }: { getScreenshot: any }) => (
+            <button
+              onClick={() => {
+                const imageSrc = getScreenshot();
+              }}
+            >
+              Capture photo
+            </button>
+          )}
+        </Webcam>
       </Box>
       <AiOutlineDotChart
         className="open_chart_modal_button"
