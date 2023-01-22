@@ -1,12 +1,14 @@
 import Slider from "@mui/material/Slider";
 import Typography from "@mui/material/Typography/Typography";
 import { SlSocialSpotify } from "react-icons/sl";
-import { Button } from "@mui/material";
 import "./MusicPlayer.scss";
-import { RxCross1, RxHeart, RxPlay } from "react-icons/rx";
-import { HiHeart } from "react-icons/hi"
+import { RxCross1, RxPlay } from "react-icons/rx";
+import { HiHeart } from "react-icons/hi";
+import { useEffect } from "react";
 
-export default function MusicPlayer({}) {
+export default function MusicPlayer({ user }: { user: boolean }) {
+  useEffect(() => {}, []);
+
   return (
     <div className="music-player">
       <img
@@ -28,9 +30,9 @@ export default function MusicPlayer({}) {
       <Slider defaultValue={30} className="slider" />
 
       <div className="controls">
-          <RxCross1 className="control-buttons" color="#eb4034" />
-          <RxPlay className="play-button" />
-          <HiHeart className="control-buttons" color="#1DB954" />
+        <RxCross1 className="control-buttons" color="#eb4034" />
+        <RxPlay className="play-button" />
+        <HiHeart className="control-buttons" color="#1DB954" />
       </div>
     </div>
   );

@@ -5,6 +5,12 @@ import Typography from "@mui/material/Typography";
 import "./SignIn.scss";
 
 export default function SignIn({}) {
+  async function signIn() {
+    const response = await fetch("http://localhost:3000/");
+    const link = (await response.json()).url;
+    window.open(link, "_blank", "noreferrer");
+  }
+
   return (
     <div className="sign-in-container">
       <div className="logo-title-container">
@@ -18,6 +24,7 @@ export default function SignIn({}) {
         variant="contained"
         size="large"
         startIcon={<BsSpotify />}
+        onClick={signIn}
       >
         Log in with Spotify
       </Button>

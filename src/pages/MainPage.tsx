@@ -1,5 +1,6 @@
-import Sidebar from "../components/Sidebar";
+import HiddenWebcamImage from "../components/HiddenWebcamImage";
 import MusicPlayer from "../components/MusicPlayer";
+import Sidebar from "../components/Sidebar";
 import "./MainPage.scss";
 import Webcam from "react-webcam";
 import { useEffect, useState } from "react";

@@ -1,25 +1,30 @@
-import {
-  Box,
-  Divider,
-  Typography,
-} from "@mui/material";
+import { Box, Divider, Typography } from "@mui/material";
 import "./Sidebar.scss";
 import { RiPlayListFill, RiFilter2Fill, RiCheckFill } from "react-icons/ri";
-import { MouseEventHandler, useState } from "react";
+import { useEffect, useState } from "react";
 
 const outputPlaylists = ["kinky", "kelvin", "kitten", "king"];
 
-export default function Sidebar() {
+export default function Sidebar({ user }: { user: boolean }) {
   const [outputPlaylist, setOutputPlaylist] = useState("kinky");
   const [inputPlaylist, setInputPlaylist] = useState("kinky");
 
   function handleOutputPlaylist(e: any) {
     setOutputPlaylist(e.target.outerText);
   }
-  
+
   function handleInputPlaylist(e: any) {
     setInputPlaylist(e.target.outerText);
   }
+
+  useEffect(() => {
+    if (user) {
+      (async function () {
+        const response = await fetch("http://localhost:3000/getUserPlaylists");
+        console.log(await response.json());
+      })();
+    }
+  }, []);
 
   return (
     <Box className="sidebar_menu">

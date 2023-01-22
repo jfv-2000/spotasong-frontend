@@ -1,20 +1,33 @@
-import "./App.scss";
+import { ThemeProvider } from "@emotion/react";
 import "@fontsource/roboto/300.css";
 import "@fontsource/roboto/400.css";
 import "@fontsource/roboto/500.css";
 import "@fontsource/roboto/700.css";
-import { ThemeProvider } from "@emotion/react";
+import { useEffect, useState } from "react";
+import "./App.scss";
+import MainPage from "./pages/MainPage";
 import theme from "./theme";
 import SignIn from "./pages/SignIn";
-import MainPage from "./pages/MainPage";
 
 function App() {
+  const [user, setUser] = useState(false);
+
+  useEffect(() => {
+    (async function () {
+      const searchParams = new URLSearchParams(document.location.search);
+      const code = searchParams.get("code");
+      if (code) {
+        const response = await fetch(
+          "http://localhost:3000/callback?code=" + code
+        );
+        setUser(true);
+      }
+    })();
+  }, []);
+
   return (
     <ThemeProvider theme={theme}>
-      <div className="App">
-        {/* <SignIn /> */}
-        <MainPage />
-      </div>
+      <div className="App">{user ? <MainPage user={user} /> : <SignIn />}</div>
     </ThemeProvider>
   );
 }
