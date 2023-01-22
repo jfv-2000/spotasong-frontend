@@ -1,38 +1,34 @@
+import { CircularProgress } from "@mui/material";
 import Slider from "@mui/material/Slider";
 import Typography from "@mui/material/Typography/Typography";
-import { SlSocialSpotify } from "react-icons/sl";
-import "./MusicPlayer.scss";
-import { RxCross1, RxPause, RxPlay } from "react-icons/rx";
+import { Dispatch, SetStateAction, useCallback, useEffect, useState } from "react";
 import { HiHeart } from "react-icons/hi";
-import { CircularProgress } from "@mui/material";
-import useAudio from "../useAudio";
-import { useCallback, useEffect, useState } from "react";
+import { RxCross1, RxPause, RxPlay } from "react-icons/rx";
+import { SlSocialSpotify } from "react-icons/sl";
 import { useStopwatch } from "react-timer-hook";
+import useAudio from "../useAudio";
+import "./MusicPlayer.scss";
 
 export default function MusicPlayer({
   user,
   songs,
   toAdd,
+  songAdded,
+  index,
+  setIndex
 }: {
   user: boolean;
   songs: any[];
   toAdd: string;
+  songAdded: () => void;
+  index: number;
+  setIndex: Dispatch<SetStateAction<number>>;
 }) {
-  const [index, setIndex] = useState(0);
   const { seconds, start, pause, reset } = useStopwatch({ autoStart: false });
 
   function songRefused() {
     if (songs.length !== 0 && songs.length !== index + 1)
       setIndex((prev) => prev + 1);
-  }
-  async function songAdded() {
-    if (songs.length !== 0 && songs.length !== index + 1) {
-      console.log({ playlist: toAdd, song: songs[index].id });
-      setIndex((prev) => prev + 1);
-      const response = await fetch(
-        "http://localhost:3000/addToPlaylist/" + toAdd + "/" + songs[index].uri
-      );
-    }
   }
 
   const press = useCallback(

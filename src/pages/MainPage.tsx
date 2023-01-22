@@ -8,8 +8,9 @@ import Sidebar from "../components/Sidebar";
 import "./MainPage.scss";
 
 export default function MainPage({ user }: { user: boolean }) {
-  const [songs, setSongs] = useState([]);
+  const [songs, setSongs] = useState<any[]>([]);
   const [toAdd, setToAdd] = useState("");
+  const [index, setIndex] = useState(0);
 
   const webcamRef = React.useRef(null);
   const [imgSrc, setImgSrc] = useState("");
@@ -17,18 +18,30 @@ export default function MainPage({ user }: { user: boolean }) {
   const [event, setEvent] =
     useState<React.ChangeEvent<HTMLInputElement> | null>(null);
 
+  async function songAdded() {
+      if (songs.length !== 0 && songs.length !== index + 1) {
+        console.log({ playlist: toAdd, song: songs[index].id });
+        setIndex((prev) => prev + 1);
+        const response = await fetch(
+          "http://localhost:3000/addToPlaylist/" + toAdd + "/" + songs[index].uri
+        );
+      }
+  }
+
   function getEmotion() {
     capture();
     axios.post(`http://localhost:3000/emotions`, { imgSrc }).then((res) => {
       const yay = res.data.surprise || res.data.joy;
       if (yay) {
-        console.log("Add song to playlist!?");
+        songAdded();
+        console.log("Song was added to playlist");
       } else {
         console.log("That was mid");
       }
       console.log(res.data);
     });
   }
+  
   const capture = React.useCallback(() => {
     const imageSrc = webcamRef.current.getScreenshot();
     setImgSrc(imageSrc);
@@ -59,9 +72,9 @@ export default function MainPage({ user }: { user: boolean }) {
         checked={checked}
         handleToggleCamera={handleToggleCamera}
       />
-      <MusicPlayer user={user} songs={songs} toAdd={toAdd} />
+      <MusicPlayer user={user} songs={songs} toAdd={toAdd} songAdded={songAdded} index={index} setIndex={setIndex}/>
       {checked ? (
-        <Box hidden={true}>
+        <Box hidden={false}>
           <HiddenWebcamImage />
           <Webcam
             mirrored
