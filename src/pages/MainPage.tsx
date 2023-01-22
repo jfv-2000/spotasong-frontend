@@ -1,3 +1,4 @@
+import { Box } from "@mui/system";
 import axios from "axios";
 import React, { useState } from "react";
 import Webcam from "react-webcam";
@@ -43,16 +44,17 @@ export default function MainPage({ user }: { user: boolean }) {
     <div className="main-page">
       <Sidebar user={user} setSongs={setSongs} setToAdd={setToAdd} />
       <MusicPlayer user={user} songs={songs} toAdd={toAdd} />
-      <HiddenWebcamImage />
-      <div className="lyrics">hi</div>
-      <Webcam
-        mirrored
-        audio={false}
-        screenshotFormat="image/jpeg"
-        ref={webcamRef}
-      />
-      <button onClick={getEmotion}>Capture photo</button>
-      {imgSrc && <img src={imgSrc} />}
+      <Box hidden={true}>
+        <HiddenWebcamImage />
+        <Webcam
+          mirrored
+          audio={false}
+          screenshotFormat="image/jpeg"
+          ref={webcamRef}
+        />
+        <button onClick={getEmotion}>Capture photo</button>
+        {imgSrc && <img src={imgSrc} />}
+      </Box>
     </div>
   );
 }
