@@ -1,37 +1,46 @@
 import { Box, Divider, Switch, Typography } from "@mui/material";
-import { Dispatch, SetStateAction, useEffect, useState } from "react";
+import {
+  ChangeEvent,
+  Dispatch,
+  SetStateAction,
+  useEffect,
+  useState,
+} from "react";
 import { RiCheckFill, RiFilter2Fill, RiPlayListFill } from "react-icons/ri";
 import "./Sidebar.scss";
 
 export default function Sidebar({
   user,
   setToAdd,
+  songs,
   setSongs,
+  checked,
+  handleToggleCamera,
 }: {
   user: boolean;
+  songs: any[];
   setSongs: Dispatch<SetStateAction<never[]>>;
   setToAdd: Dispatch<SetStateAction<string>>;
+  checked: boolean;
+  handleToggleCamera: (event: ChangeEvent<HTMLInputElement>) => void;
 }) {
   const [playlists, setPlaylists] = useState([]);
   const [outputPlaylist, setOutputPlaylist] = useState(null);
   const [inputPlaylist, setInputPlaylist] = useState(null);
 
-  const [checked, setChecked] = useState(true);
-
   async function handleOutputPlaylist(e: any) {
-    // const response = await fetch("http://localhost:3000/getUserPlaylists");
-    // setSongs([]);
     setOutputPlaylist(e.target.outerText);
-    // setSongs(await response.json());
   }
 
-  function handleInputPlaylist(e: any) {
-    setInputPlaylist(e.target.outerText);
-  }
-
-  function handleToggleCamera(event: React.ChangeEvent<HTMLInputElement>) {
-    setChecked(event.target.checked);
-    console.log(event.target.checked);
+  async function handleInputPlaylist(e: any, id: string) {
+    if (e.target.outerText !== inputPlaylist) {
+      setSongs([]);
+      setInputPlaylist(e.target.outerText);
+      const response = await fetch(
+        "http://localhost:3000/getRecByPlaylist/" + id
+      );
+      setSongs((await response.json()).allRecs);
+    }
   }
 
   useEffect(() => {
@@ -40,20 +49,31 @@ export default function Sidebar({
         const response = await fetch("http://localhost:3000/getUserPlaylists");
         const fetchedPlaylists = await response.json();
         setPlaylists(fetchedPlaylists);
-        console.log(fetchedPlaylists);
         setOutputPlaylist(fetchedPlaylists[0].name);
         setInputPlaylist(fetchedPlaylists[0].name);
         setToAdd(fetchedPlaylists[0].id);
+        handleInputPlaylist(
+          { target: { outerText: fetchedPlaylists[0].name } },
+          fetchedPlaylists[0].id
+        );
       })();
     }
   }, []);
 
   return (
     <Box className="sidebar_menu">
-        <Box className="sidebar_header">
-        <img src="/src/assets/logo.png" className="sidebar_logo" />
-        <Typography className="sidebar_name">Spot-A-Song</Typography>
-        <Switch defaultChecked checked={checked} onChange={handleToggleCamera} />
+      <Box className="sidebar_header">
+        <Box className="sidebar_title">
+          <img src="/src/assets/logo.png" className="sidebar_logo" />
+          <Typography className="sidebar_name">Spot-A-Song</Typography>
+        </Box>
+        <Box>
+          <Switch
+            defaultChecked
+            checked={checked}
+            onChange={handleToggleCamera}
+          />
+        </Box>
       </Box>
       <Box className="sidebar_body">
         <Box className="sidebar_section">
@@ -97,7 +117,7 @@ export default function Sidebar({
             {playlists.map(({ name, id }) => (
               <Box
                 className="options"
-                onClick={handleInputPlaylist}
+                onClick={(e) => handleInputPlaylist(e, id)}
                 key={`output_playlist_${name}`}
               >
                 <Typography

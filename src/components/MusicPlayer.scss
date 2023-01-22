@@ -10,7 +10,7 @@
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  gap: 10px;
+  gap: 20px;
 }
 
 .lyrics {
@@ -22,11 +22,18 @@
   width: 35px;
   height: 35px;
   align-self: center;
+  &:hover {
+    cursor: pointer;
+  }
 }
 
 .song-information {
   display: flex;
-  gap: 35px;
+  width: 400px;
+  height: 175px;
+  overflow: hidden;
+  justify-content: center;
+  align-items: center;
 }
 
 .slider {
@@ -35,7 +42,7 @@
 
 .controls {
   display: flex;
-  justify-content: space-around;
+  justify-content: space-between;
   width: 400px;
   align-items: center;
   gap: 20px;
@@ -55,12 +62,12 @@
   }
 
   .play-button {
-    width: 30px;
-    height: 30px;
+    width: 40px;
+    height: 40px;
     color: white;
     border-radius: 50%;
     padding: 10px;
-    // border: 1px white solid;
+    border: 1px white solid;
     &:hover {
       background-color: #242424;
       cursor: pointer;
