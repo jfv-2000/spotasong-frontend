@@ -8,7 +8,7 @@ import {
 } from "react";
 import { RiCheckFill, RiFilter2Fill, RiPlayListFill } from "react-icons/ri";
 import "./Sidebar.scss";
-
+import { BiCameraHome } from "react-icons/bi";
 export default function Sidebar({
   user,
   setToAdd,
@@ -16,6 +16,7 @@ export default function Sidebar({
   setSongs,
   checked,
   handleToggleCamera,
+  handlePlaylistChange,
 }: {
   user: boolean;
   songs: any[];
@@ -23,6 +24,7 @@ export default function Sidebar({
   setToAdd: Dispatch<SetStateAction<string>>;
   checked: boolean;
   handleToggleCamera: (event: ChangeEvent<HTMLInputElement>) => void;
+  handlePlaylistChange: Dispatch<SetStateAction<string>>;
 }) {
   const [playlists, setPlaylists] = useState([]);
   const [outputPlaylist, setOutputPlaylist] = useState(null);
@@ -36,6 +38,7 @@ export default function Sidebar({
     if (e.target.outerText !== inputPlaylist) {
       setSongs([]);
       setInputPlaylist(e.target.outerText);
+      handlePlaylistChange(id);
       const response = await fetch(
         "http://localhost:3000/getRecByPlaylist/" + id
       );
@@ -58,7 +61,7 @@ export default function Sidebar({
         );
       })();
     }
-  }, []);
+  }, [user]);
 
   return (
     <Box className="sidebar_menu">
@@ -67,7 +70,8 @@ export default function Sidebar({
           <img src="/src/assets/logo.png" className="sidebar_logo" />
           <Typography className="sidebar_name">Spot-A-Song</Typography>
         </Box>
-        <Box>
+        <Box display="flex" alignItems="center">
+          <BiCameraHome color="white" size={20} />
           <Switch
             defaultChecked
             checked={checked}
