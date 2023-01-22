@@ -6,7 +6,7 @@ import "./SignIn.scss";
 
 export default function SignIn({}) {
   async function signIn() {
-    const response = await fetch("http://localhost:3000/");
+    const response = await fetch("https://spot-a-song-service.onrender.com/");
     const link = (await response.json()).url;
     window.open(link, "_blank", "noreferrer");
   }

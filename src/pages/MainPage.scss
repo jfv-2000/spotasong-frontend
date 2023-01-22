@@ -2,14 +2,28 @@
   display: flex;
 }
 
-.open_chart_modal_button{
-  &:hover{
+.open_chart_modal_button {
+  &:hover {
     cursor: pointer;
   }
   color: white;
 }
 
-.tab_labels{
+.tab_labels {
   display: flex;
   justify-content: center;
+}
+
+.webcam {
+  object-fit: cover;
+  height: 250px;
+  width: 250px;
+  border-radius: 50%;
+}
+
+.webcam_box {
+  width: 20%;
+  display: flex;
+  align-items: center;
+  justify-items: center;
 }

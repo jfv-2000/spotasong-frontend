@@ -32,7 +32,7 @@ export default function MainPage({
   const [tabValue, setTabValue] = React.useState("top-100");
   const webcamRef = React.useRef(null);
   const [imgSrc, setImgSrc] = useState("");
-  const [checked, setChecked] = useState(true);
+  const [checked, setChecked] = useState(false);
   const [event, setEvent] =
     useState<React.ChangeEvent<HTMLInputElement> | null>(null);
 
@@ -40,13 +40,11 @@ export default function MainPage({
     if (currentPlaylist !== "") {
       (async function () {
         const res = await fetch(
-          `http://localhost:3000/getPlaylistTracks/${currentPlaylist}`
+          `https://spot-a-song-service.onrender.com/getPlaylistTracks/${currentPlaylist}`
         );
         const stuff = await res.json();
-        console.log(stuff);
         setPlaylistTopArtists(stuff);
       })();
-      console.log("called");
     }
   }, [currentPlaylist]);
   const bcDataTop100Tracks = transformBubbleChartData(top100Tracks);
@@ -62,7 +60,7 @@ export default function MainPage({
       const interval = setInterval(() => {
         // console.log("Logs every secs");
         getEmotion();
-      }, 1000);
+      }, 3000);
       return () => clearInterval(interval); // This represents the unmount function, in which you need to clear your interval to prevent memory leaks.
     }
   }, [checked]);
@@ -71,32 +69,37 @@ export default function MainPage({
     if (songs.length !== 0 && songs.length !== index + 1) {
       setIndex((prev) => prev + 1);
       const response = await fetch(
-        "http://localhost:3000/addToPlaylist/" + toAdd + "/" + songs[index].uri
+        "https://spot-a-song-service.onrender.com/addToPlaylist/" +
+          toAdd +
+          "/" +
+          songs[index].uri
       );
     }
   }
 
+  useEffect(() => {
+    setIndex(0);
+  }, [songs]);
+
   function getEmotion() {
-    console.log("get emotion called");
     const imgSrc = webcamRef.current.getScreenshot();
-    console.log("img src", imgSrc);
-    axios.post(`http://localhost:3000/emotions`, { imgSrc }).then((res) => {
-      const yay = res.data.surprise || res.data.joy;
-      if (yay) {
-        songAdded();
-        console.log("Song was added to playlist");
-      } else {
-        console.log("That was mid");
-      }
-      console.log(res.data);
-    });
+    axios
+      .post(`https://spot-a-song-service.onrender.com/emotions`, { imgSrc })
+      .then((res) => {
+        const yay = res.data.surprise || res.data.joy;
+        if (yay) {
+          songAdded();
+          console.log("Song was added to playlist");
+        } else {
+          console.log("That was mid");
+        }
+        console.log(res.data);
+      });
   }
 
   function handleToggleCamera(event: React.ChangeEvent<HTMLInputElement>) {
     setChecked(event.target.checked);
     setEvent(event);
-
-    console.log("toggleOn", event.target.checked);
   }
 
   const [touchStart, setTouchStart] = useState(null);
@@ -150,16 +153,19 @@ export default function MainPage({
         index={index}
         setIndex={setIndex}
       />
+
       {checked && (
-        <Box hidden={false}>
-          <HiddenWebcamImage />
+        <Box hidden={false} className="webcam_box">
           <Webcam
+            className="webcam"
             mirrored
             audio={false}
             screenshotFormat="image/jpeg"
             ref={webcamRef}
           />
-          <button onClick={getEmotion}>Capture photo</button>
+          <button hidden={true} onClick={getEmotion}>
+            Capture photo
+          </button>
           {imgSrc && <img src={imgSrc} />}
         </Box>
       )}

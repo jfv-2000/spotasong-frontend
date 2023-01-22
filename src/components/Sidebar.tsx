@@ -43,7 +43,7 @@ export default function Sidebar({
       setInputPlaylist(e.target.outerText);
       handlePlaylistChange(id);
       const response = await fetch(
-        "http://localhost:3000/getRecByPlaylist/" + id
+        "https://spot-a-song-service.onrender.com/getRecByPlaylist/" + id
       );
       setSongs((await response.json()).allRecs);
     }
@@ -52,7 +52,9 @@ export default function Sidebar({
   useEffect(() => {
     if (user) {
       (async function () {
-        const response = await fetch("http://localhost:3000/getUserPlaylists");
+        const response = await fetch(
+          "https://spot-a-song-service.onrender.com/getUserPlaylists"
+        );
         const fetchedPlaylists = await response.json();
         setPlaylists(fetchedPlaylists);
         setOutputPlaylist(fetchedPlaylists[0].name);

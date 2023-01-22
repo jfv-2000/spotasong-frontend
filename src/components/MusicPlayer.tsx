@@ -27,7 +27,10 @@ export default function MusicPlayer({
   index: number;
   setIndex: Dispatch<SetStateAction<number>>;
 }) {
-  const { seconds, start, pause, reset } = useStopwatch({ autoStart: false });
+  const { isRunning, seconds, start, pause, reset } = useStopwatch({
+    autoStart: false,
+  });
+  const [audio, setAudio] = useState(null);
 
   function songRefused() {
     if (songs.length !== 0 && songs.length !== index + 1) {
@@ -35,29 +38,31 @@ export default function MusicPlayer({
     }
   }
 
+  useEffect(() => {
+    if (audio) {
+      audio.addEventListener("ended", audio.play());
+      return () => {
+        audio.removeEventListener("ended", audio.pause());
+      };
+    }
+  }, [audio, songs]);
+
   function pauseAudio() {
     pause();
-    toggle();
+    audio.pause();
   }
 
   function playAudio() {
     start();
-    toggle();
+    audio.play();
   }
 
   useEffect(() => {
-    setIndex(0);
-  }, [songs]);
-
-  const [playing, toggle, setAudio] = useAudio("");
-
-  useEffect(() => {
     if (songs.length !== 0) {
-      setAudio(new Audio(songs[index].preview_url));
       reset();
-      pause();
+      setAudio(new Audio(songs[index].preview_url));
     }
-  }, [index, songs]);
+  }, [index]);
 
   let musicPlayerElement = null;
   if (songs.length === 0) {
@@ -119,7 +124,7 @@ export default function MusicPlayer({
             color="#eb4034"
             onClick={songRefused}
           />
-          {playing ? (
+          {isRunning ? (
             <RxPause className="play-button" onClick={pauseAudio} />
           ) : (
             <RxPlay className="play-button" onClick={playAudio} />
