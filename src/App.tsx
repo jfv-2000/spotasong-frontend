@@ -6,8 +6,8 @@ import "@fontsource/roboto/700.css";
 import { useEffect, useState } from "react";
 import "./App.scss";
 import MainPage from "./pages/MainPage";
-import theme from "./theme";
 import SignIn from "./pages/SignIn";
+import theme from "./theme";
 
 function App() {
   const [user, setUser] = useState(false);
