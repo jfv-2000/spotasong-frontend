@@ -67,6 +67,7 @@ export default function MainPage({ user }: { user: boolean }) {
       <Sidebar
         user={user}
         songs={songs}
+        setSongs={setSongs}
         setToAdd={setToAdd}
         checked={checked}
         handleToggleCamera={handleToggleCamera}
