@@ -1,3 +1,15 @@
 .main-page {
   display: flex;
 }
+
+.open_chart_modal_button{
+  &:hover{
+    cursor: pointer;
+  }
+  color: white;
+}
+
+.tab_labels{
+  display: flex;
+  justify-content: center;
+}

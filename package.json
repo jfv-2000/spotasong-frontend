@@ -12,6 +12,7 @@
     "@emotion/react": "^11.10.5",
     "@emotion/styled": "^11.10.5",
     "@fontsource/roboto": "^4.5.8",
+    "@mui/lab": "^5.0.0-alpha.116",
     "@mui/material": "^5.11.5",
     "@weknow/react-bubble-chart-d3": "^1.0.12",
     "axios": "^1.2.3",
