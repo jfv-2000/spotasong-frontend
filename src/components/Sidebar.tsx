@@ -33,7 +33,6 @@ export default function Sidebar({
         const response = await fetch("http://localhost:3000/getUserPlaylists");
         const fetchedPlaylists = await response.json();
         setPlaylists(fetchedPlaylists);
-        console.log(fetchedPlaylists);
         setOutputPlaylist(fetchedPlaylists[0].name);
         setInputPlaylist(fetchedPlaylists[0].name);
         setToAdd(fetchedPlaylists[0].id);
@@ -43,7 +42,7 @@ export default function Sidebar({
 
   return (
     <Box className="sidebar_menu">
-        <Box className="sidebar_header">
+      <Box className="sidebar_header">
         <img src="/src/assets/logo.png" className="sidebar_logo" />
         <Typography className="sidebar_name">Spot-A-Song</Typography>
       </Box>

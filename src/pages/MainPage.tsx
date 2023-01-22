@@ -40,7 +40,7 @@ export default function MainPage({ user }: { user: boolean }) {
       <MusicPlayer user={user} songs={songs} toAdd={toAdd} />
       <HiddenWebcamImage />
       <div className="lyrics">hi</div>
-      <Webcam
+      {/* <Webcam
         mirrored
         audio={false}
         screenshotFormat="image/jpeg"
@@ -48,7 +48,7 @@ export default function MainPage({ user }: { user: boolean }) {
       />
       <button onClick={getEmotion}>Capture photo</button>
 
-      {imgSrc && <img src={imgSrc} />}
+      {imgSrc && <img src={imgSrc} />} */}
     </div>
   );
 }
