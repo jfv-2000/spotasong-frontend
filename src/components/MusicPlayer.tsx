@@ -6,9 +6,8 @@ import { RxCross1, RxPause, RxPlay } from "react-icons/rx";
 import { HiHeart } from "react-icons/hi";
 import { CircularProgress } from "@mui/material";
 import useAudio from "../useAudio";
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { useStopwatch } from "react-timer-hook";
-import useKeyPress from "../useKeyPress";
 
 export default function MusicPlayer({
   user,
@@ -21,25 +20,24 @@ export default function MusicPlayer({
 }) {
   const [index, setIndex] = useState(0);
   const { seconds, start, pause, reset } = useStopwatch({ autoStart: false });
-  const rightPress = useKeyPress("ArrowRight", "d", songAdded);
-  const leftPress = useKeyPress("ArrowLeft", "a", songRefused);
-  console.log(songs);
-
   function songRefused() {
-    if (songs.length !== 0 && songs.length > index + 1)
+    if (songs.length !== 0 && songs.length !== index + 1)
       setIndex((prev) => prev + 1);
   }
   function songAdded() {
-    console.log(songs.length !== 0, songs.length - 1 > index);
-
-    if (songs.length !== 0 && songs.length - 1 > index)
+    if (songs.length !== 0 && songs.length !== index + 1) {
+      console.log(index);
       setIndex((prev) => prev + 1);
+    }
   }
 
-  function press(key: any) {
-    if (key === "ArrowRight" || key === "d") songAdded();
-    else if (key === "ArrowLeft" || key === "w") songRefused();
-  }
+  const press = useCallback(
+    ({ key }: { key: string }) => {
+      if (key === "ArrowRight" || key === "d") songAdded();
+      else if (key === "ArrowLeft" || key === "w") songRefused();
+    },
+    [index]
+  );
 
   useEffect(() => {
     window.addEventListener("keydown", press);
