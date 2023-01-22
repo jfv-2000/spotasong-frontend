@@ -1,4 +1,5 @@
 # Frontend for Spot-A-Song
+React Single page application in `App.tsx` to get Spotify song recommendations and stats
 
 ## Features
 1. Log in with Spotify
