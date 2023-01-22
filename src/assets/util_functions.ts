@@ -3,11 +3,13 @@ export function transformBubbleChartData(data: any[]){
         const artistCount = {};
         data.forEach(elm => {
             elm.artists.forEach((artist: any[]) => {
-                artistCount[artist.name] = (artistCount[artist.name] || 0) + 1;
+                // @ts-ignore
+                artistCount[artist.name] = (artistCount[artist.name as keyof any ] || 0) + 1;
             })
         })
         const sortable = [];
         for(let artist in artistCount){
+            // @ts-ignore
             sortable.push([artist, artistCount[artist]])
         }
         sortable.sort((a, b) => b[1] - a[1]);
@@ -25,11 +27,13 @@ export function transformPlaylistBubbleChartData(data: any[]){
         const artistCount = {};
         data.forEach(elm => {
             elm.track.artists.forEach((artist: any[])=> {
+                // @ts-ignore
                 artistCount[artist.name] = (artistCount[artist.name] || 0) + 1;
             })
         })
         const sortable = [];
         for(let artist in artistCount){
+            // @ts-ignore
             sortable.push([artist, artistCount[artist]])
         }
         sortable.sort((a, b) => b[1] - a[1]);
