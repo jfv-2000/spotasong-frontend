@@ -1,51 +1,39 @@
+import { CircularProgress } from "@mui/material";
 import Slider from "@mui/material/Slider";
 import Typography from "@mui/material/Typography/Typography";
-import { SlSocialSpotify } from "react-icons/sl";
-import "./MusicPlayer.scss";
-import { RxCross1, RxPause, RxPlay } from "react-icons/rx";
+import {
+  Dispatch,
+  SetStateAction,
+  useCallback,
+  useEffect,
+  useState,
+} from "react";
 import { HiHeart } from "react-icons/hi";
-import { CircularProgress } from "@mui/material";
-import useAudio from "../useAudio";
-import { useCallback, useEffect, useState } from "react";
+import { RxCross1, RxPause, RxPlay } from "react-icons/rx";
+import { SlSocialSpotify } from "react-icons/sl";
 import { useStopwatch } from "react-timer-hook";
+import useAudio from "../useAudio";
+import "./MusicPlayer.scss";
+import CrossfadeImage from "react-crossfade-image";
 
 export default function MusicPlayer({
-  user,
   songs,
-  toAdd,
+  songAdded,
+  index,
+  setIndex,
 }: {
-  user: boolean;
   songs: any[];
-  toAdd: string;
+  songAdded: () => void;
+  index: number;
+  setIndex: Dispatch<SetStateAction<number>>;
 }) {
-  const [index, setIndex] = useState(0);
   const { seconds, start, pause, reset } = useStopwatch({ autoStart: false });
+
   function songRefused() {
-    if (songs.length !== 0 && songs.length !== index + 1)
-      setIndex((prev) => prev + 1);
-  }
-  function songAdded() {
     if (songs.length !== 0 && songs.length !== index + 1) {
-      console.log(index);
       setIndex((prev) => prev + 1);
     }
   }
-
-  const press = useCallback(
-    ({ key }: { key: string }) => {
-      if (key === "ArrowRight" || key === "d") songAdded();
-      else if (key === "ArrowLeft" || key === "w") songRefused();
-    },
-    [index]
-  );
-
-  useEffect(() => {
-    window.addEventListener("keydown", press);
-
-    return () => {
-      window.removeEventListener("keydown", press);
-    };
-  }, []);
 
   function pauseAudio() {
     pause();
@@ -71,7 +59,7 @@ export default function MusicPlayer({
     }
   }, [index, songs]);
 
-  let musicPlayerElement = <></>;
+  let musicPlayerElement = null;
   if (songs.length === 0) {
     musicPlayerElement = (
       <>
@@ -95,7 +83,10 @@ export default function MusicPlayer({
   } else {
     musicPlayerElement = (
       <>
-        <img className="song-cover" src={songs[index].album.images[0].url} />
+        <CrossfadeImage
+          className="song-cover"
+          src={songs[index].album.images[0].url}
+        />
         <div className="song-information">
           <div style={{ flex: 4 }}>
             <Typography variant="h4" color="white">

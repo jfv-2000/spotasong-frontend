@@ -20,7 +20,7 @@ export default function Sidebar({
 }: {
   user: boolean;
   songs: any[];
-  setSongs: Dispatch<SetStateAction<never[]>>;
+  setSongs: Dispatch<SetStateAction<any[]>>;
   setToAdd: Dispatch<SetStateAction<string>>;
   checked: boolean;
   handleToggleCamera: (event: ChangeEvent<HTMLInputElement>) => void;
@@ -30,8 +30,11 @@ export default function Sidebar({
   const [outputPlaylist, setOutputPlaylist] = useState(null);
   const [inputPlaylist, setInputPlaylist] = useState(null);
 
-  async function handleOutputPlaylist(e: any) {
-    setOutputPlaylist(e.target.outerText);
+  async function handleOutputPlaylist(e: any, id: string) {
+    if (e.target.outerText !== outputPlaylist) {
+      setOutputPlaylist(e.target.outerText);
+      setToAdd(id);
+    }
   }
 
   async function handleInputPlaylist(e: any, id: string) {
@@ -92,7 +95,7 @@ export default function Sidebar({
             {playlists.map(({ name, id }) => (
               <Box
                 className="options"
-                onClick={handleOutputPlaylist}
+                onClick={(e) => handleOutputPlaylist(e, id)}
                 key={`output_playlist_${name}`}
               >
                 <Typography
