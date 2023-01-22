@@ -1,26 +1,38 @@
+import { CircularProgress } from "@mui/material";
 import Slider from "@mui/material/Slider";
 import Typography from "@mui/material/Typography/Typography";
-import { SlSocialSpotify } from "react-icons/sl";
-import "./MusicPlayer.scss";
-import { RxCross1, RxPause, RxPlay } from "react-icons/rx";
+import { Dispatch, SetStateAction, useCallback, useEffect, useState } from "react";
 import { HiHeart } from "react-icons/hi";
-import { CircularProgress } from "@mui/material";
-import useAudio from "../useAudio";
-import { useCallback, useEffect, useState } from "react";
+import { RxCross1, RxPause, RxPlay } from "react-icons/rx";
+import { SlSocialSpotify } from "react-icons/sl";
 import { useStopwatch } from "react-timer-hook";
+<<<<<<< HEAD
 import { useAutoAnimate } from "@formkit/auto-animate/react";
+=======
+import useAudio from "../useAudio";
+import "./MusicPlayer.scss";
+>>>>>>> b54b0e33dc3ddda9c652797e05a72eccd5380c8c
 
 export default function MusicPlayer({
   user,
   songs,
   toAdd,
+  songAdded,
+  index,
+  setIndex
 }: {
   user: boolean;
   songs: any[];
   toAdd: string;
+  songAdded: () => void;
+  index: number;
+  setIndex: Dispatch<SetStateAction<number>>;
 }) {
+<<<<<<< HEAD
   const [index, setIndex] = useState(0);
   const [parent, enableAnimations] = useAutoAnimate();
+=======
+>>>>>>> b54b0e33dc3ddda9c652797e05a72eccd5380c8c
   const { seconds, start, pause, reset } = useStopwatch({ autoStart: false });
 
   function songRefused() {
