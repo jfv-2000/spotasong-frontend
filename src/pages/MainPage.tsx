@@ -58,7 +58,6 @@ export default function MainPage({
   useEffect(() => {
     if (checked) {
       const interval = setInterval(() => {
-        // console.log("Logs every secs");
         getEmotion();
       }, 3000);
       return () => clearInterval(interval); // This represents the unmount function, in which you need to clear your interval to prevent memory leaks.
@@ -89,11 +88,7 @@ export default function MainPage({
         const yay = res.data.surprise || res.data.joy;
         if (yay) {
           songAdded();
-          console.log("Song was added to playlist");
-        } else {
-          console.log("That was mid");
         }
-        console.log(res.data);
       });
   }
 
@@ -120,9 +115,6 @@ export default function MainPage({
     const distance = touchStart - touchEnd;
     const isLeftSwipe = distance > minSwipeDistance;
     const isRightSwipe = distance < -minSwipeDistance;
-    if (isLeftSwipe || isRightSwipe)
-      console.log("swipe", isLeftSwipe ? "left" : "right");
-    // add your conditional logic here
   };
 
   const videoConstraints = {

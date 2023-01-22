@@ -62,7 +62,7 @@ export default function MusicPlayer({
       reset();
       setAudio(new Audio(songs[index].preview_url));
     }
-  }, [index]);
+  }, [index, songs]);
 
   let musicPlayerElement = null;
   if (songs.length === 0) {
