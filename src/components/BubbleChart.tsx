@@ -1,5 +1,6 @@
 import { Typography } from "@mui/material";
 import { Box } from "@mui/system";
+// @ts-ignore
 import BubbleChartD3 from "@weknow/react-bubble-chart-d3";
 import "./BubbleChart.scss";
 

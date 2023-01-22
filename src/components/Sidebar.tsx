@@ -4,11 +4,11 @@ import {
   Dispatch,
   SetStateAction,
   useEffect,
-  useState,
+  useState
 } from "react";
+import { BiCameraHome } from "react-icons/bi";
 import { RiCheckFill, RiFilter2Fill, RiPlayListFill } from "react-icons/ri";
 import "./Sidebar.scss";
-import { BiCameraHome } from "react-icons/bi";
 export default function Sidebar({
   user,
   setToAdd,

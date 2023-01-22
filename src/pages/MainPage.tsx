@@ -1,20 +1,18 @@
+import { TabContext, TabList, TabPanel } from "@mui/lab";
+import { Dialog, Tab } from "@mui/material";
 import { Box } from "@mui/system";
 import axios from "axios";
-import React, { useState, useEffect } from "react";
+import React, { useEffect, useState } from "react";
+import { AiOutlineDotChart } from "react-icons/ai";
 import Webcam from "react-webcam";
+import {
+  transformBubbleChartData,
+  transformPlaylistBubbleChartData
+} from "../assets/util_functions";
 import BubbleChart from "../components/BubbleChart";
-import HiddenWebcamImage from "../components/HiddenWebcamImage";
 import MusicPlayer from "../components/MusicPlayer";
 import Sidebar from "../components/Sidebar";
 import "./MainPage.scss";
-import { AiOutlineDotChart } from "react-icons/ai";
-import { Dialog, Tab } from "@mui/material";
-import { TabContext, TabList, TabPanel } from "@mui/lab";
-import {
-  transformBubbleChartData,
-  transformPlaylistBubbleChartData,
-} from "../assets/util_functions";
-import { RxColumnSpacing } from "react-icons/rx";
 
 export default function MainPage({
   user,
@@ -23,7 +21,7 @@ export default function MainPage({
   user: boolean;
   top100Tracks: any[];
 }) {
-  const [songs, setSongs] = useState([]);
+  const [songs, setSongs] = useState<any>([]);
   const [toAdd, setToAdd] = useState("");
   const [currentPlaylist, setCurrentPlaylist] = useState("");
   const [playlistTopArtists, setPlaylistTopArtists] = useState([]);
