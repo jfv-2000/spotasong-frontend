@@ -1,16 +1,26 @@
 import { Box, Divider, Typography } from "@mui/material";
 import "./Sidebar.scss";
 import { RiPlayListFill, RiFilter2Fill, RiCheckFill } from "react-icons/ri";
-import { useEffect, useState } from "react";
+import { Dispatch, SetStateAction, useEffect, useState } from "react";
 
-const outputPlaylists = ["kinky", "kelvin", "kitten", "king"];
+export default function Sidebar({
+  user,
+  setToAdd,
+  setSongs,
+}: {
+  user: boolean;
+  setSongs: Dispatch<SetStateAction<never[]>>;
+  setToAdd: Dispatch<SetStateAction<string>>;
+}) {
+  const [playlists, setPlaylists] = useState([]);
+  const [outputPlaylist, setOutputPlaylist] = useState(null);
+  const [inputPlaylist, setInputPlaylist] = useState(null);
 
-export default function Sidebar({ user }: { user: boolean }) {
-  const [outputPlaylist, setOutputPlaylist] = useState("kinky");
-  const [inputPlaylist, setInputPlaylist] = useState("kinky");
-
-  function handleOutputPlaylist(e: any) {
+  async function handleOutputPlaylist(e: any) {
+    // const response = await fetch("http://localhost:3000/getUserPlaylists");
+    // setSongs([]);
     setOutputPlaylist(e.target.outerText);
+    // setSongs(await response.json());
   }
 
   function handleInputPlaylist(e: any) {
@@ -21,7 +31,12 @@ export default function Sidebar({ user }: { user: boolean }) {
     if (user) {
       (async function () {
         const response = await fetch("http://localhost:3000/getUserPlaylists");
-        console.log(await response.json());
+        const fetchedPlaylists = await response.json();
+        setPlaylists(fetchedPlaylists);
+        console.log(fetchedPlaylists);
+        setOutputPlaylist(fetchedPlaylists[0].name);
+        setInputPlaylist(fetchedPlaylists[0].name);
+        setToAdd(fetchedPlaylists[0].id);
       })();
     }
   }, []);
@@ -42,24 +57,22 @@ export default function Sidebar({ user }: { user: boolean }) {
           </Box>
           <Divider className="sidebar_divider" sx={{ marginTop: "5px" }} />
           <Box className="sidebar_section_body">
-            {outputPlaylists.map((playlist) => (
+            {playlists.map(({ name, id }) => (
               <Box
                 className="options"
                 onClick={handleOutputPlaylist}
-                key={`output_playlist_${playlist}`}
+                key={`output_playlist_${name}`}
               >
                 <Typography
                   className={
-                    playlist === outputPlaylist
+                    name === outputPlaylist
                       ? "selected_options"
                       : "not_selected_options"
                   }
                 >
-                  {playlist}
+                  {name}
                 </Typography>
-                {playlist === outputPlaylist ? (
-                  <RiCheckFill color="white" />
-                ) : null}
+                {name === outputPlaylist ? <RiCheckFill color="white" /> : null}
               </Box>
             ))}
           </Box>
@@ -73,24 +86,22 @@ export default function Sidebar({ user }: { user: boolean }) {
           </Box>
           <Divider className="sidebar_divider" sx={{ marginTop: "5px" }} />
           <Box className="sidebar_section_body">
-            {outputPlaylists.map((playlist) => (
+            {playlists.map(({ name, id }) => (
               <Box
                 className="options"
                 onClick={handleInputPlaylist}
-                key={`output_playlist_${playlist}`}
+                key={`output_playlist_${name}`}
               >
                 <Typography
                   className={
-                    playlist === inputPlaylist
+                    name === inputPlaylist
                       ? "selected_options"
                       : "not_selected_options"
                   }
                 >
-                  {playlist}
+                  {name}
                 </Typography>
-                {playlist === inputPlaylist ? (
-                  <RiCheckFill color="white" />
-                ) : null}
+                {name === inputPlaylist ? <RiCheckFill color="white" /> : null}
               </Box>
             ))}
           </Box>
