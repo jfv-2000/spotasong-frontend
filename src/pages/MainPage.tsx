@@ -187,8 +187,11 @@ export default function MainPage({
           <TabContext value={tabValue}>
             <Box className="tab_labels">
               <TabList onChange={handleTabChange}>
-                <Tab label="Your Top 50 Tracks" value="top-100" />
-                <Tab label="Playlist" value="playlist" />
+                <Tab label="Your Top 50 Tracks'Artists" value="top-100" />
+                <Tab
+                  label="Top Artists of Selected Playlist"
+                  value="playlist"
+                />
               </TabList>
             </Box>
             <TabPanel value="top-100">
