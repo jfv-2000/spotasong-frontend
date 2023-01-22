@@ -20,14 +20,18 @@ export default function MusicPlayer({
 }) {
   const [index, setIndex] = useState(0);
   const { seconds, start, pause, reset } = useStopwatch({ autoStart: false });
+
   function songRefused() {
     if (songs.length !== 0 && songs.length !== index + 1)
       setIndex((prev) => prev + 1);
   }
-  function songAdded() {
+  async function songAdded() {
     if (songs.length !== 0 && songs.length !== index + 1) {
-      console.log(index);
+      console.log({ playlist: toAdd, song: songs[index].id });
       setIndex((prev) => prev + 1);
+      const response = await fetch(
+        "http://localhost:3000/addToPlaylist/" + toAdd + "/" + songs[index].uri
+      );
     }
   }
 

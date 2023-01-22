@@ -28,8 +28,11 @@ export default function Sidebar({
   const [outputPlaylist, setOutputPlaylist] = useState(null);
   const [inputPlaylist, setInputPlaylist] = useState(null);
 
-  async function handleOutputPlaylist(e: any) {
-    setOutputPlaylist(e.target.outerText);
+  async function handleOutputPlaylist(e: any, id: string) {
+    if (e.target.outerText !== inputPlaylist) {
+      setOutputPlaylist(e.target.outerText);
+      setToAdd(id);
+    }
   }
 
   async function handleInputPlaylist(e: any, id: string) {
@@ -88,7 +91,7 @@ export default function Sidebar({
             {playlists.map(({ name, id }) => (
               <Box
                 className="options"
-                onClick={handleOutputPlaylist}
+                onClick={(e) => handleOutputPlaylist(e, id)}
                 key={`output_playlist_${name}`}
               >
                 <Typography
