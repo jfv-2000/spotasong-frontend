@@ -1,16 +1,28 @@
-import { Box, Divider, Typography } from "@mui/material";
+import { Box, Divider, Switch, Typography } from "@mui/material";
+import {
+  ChangeEvent,
+  Dispatch,
+  SetStateAction,
+  useEffect,
+  useState,
+} from "react";
+import { RiCheckFill, RiFilter2Fill, RiPlayListFill } from "react-icons/ri";
 import "./Sidebar.scss";
-import { RiPlayListFill, RiFilter2Fill, RiCheckFill } from "react-icons/ri";
-import { Dispatch, SetStateAction, useEffect, useState } from "react";
 
 export default function Sidebar({
   user,
   setToAdd,
+  songs,
   setSongs,
+  checked,
+  handleToggleCamera,
 }: {
   user: boolean;
+  songs: any[];
   setSongs: Dispatch<SetStateAction<never[]>>;
   setToAdd: Dispatch<SetStateAction<string>>;
+  checked: boolean;
+  handleToggleCamera: (event: ChangeEvent<HTMLInputElement>) => void;
 }) {
   const [playlists, setPlaylists] = useState([]);
   const [outputPlaylist, setOutputPlaylist] = useState(null);
@@ -51,8 +63,17 @@ export default function Sidebar({
   return (
     <Box className="sidebar_menu">
       <Box className="sidebar_header">
-        <img src="/src/assets/logo.png" className="sidebar_logo" />
-        <Typography className="sidebar_name">Spot-A-Song</Typography>
+        <Box className="sidebar_title">
+          <img src="/src/assets/logo.png" className="sidebar_logo" />
+          <Typography className="sidebar_name">Spot-A-Song</Typography>
+        </Box>
+        <Box>
+          <Switch
+            defaultChecked
+            checked={checked}
+            onChange={handleToggleCamera}
+          />
+        </Box>
       </Box>
       <Box className="sidebar_body">
         <Box className="sidebar_section">

@@ -21,21 +21,33 @@ export default function MusicPlayer({
 }) {
   const [index, setIndex] = useState(0);
   const { seconds, start, pause, reset } = useStopwatch({ autoStart: false });
-  const rightPress = useKeyPress("ArrowRight", "d");
-  const leftPress = useKeyPress("ArrowLeft", "a");
+  const rightPress = useKeyPress("ArrowRight", "d", songAdded);
+  const leftPress = useKeyPress("ArrowLeft", "a", songRefused);
+  console.log(songs);
 
   function songRefused() {
-    setIndex((prev) => prev + 1);
+    if (songs.length !== 0 && songs.length > index + 1)
+      setIndex((prev) => prev + 1);
   }
   function songAdded() {
-    setIndex((prev) => prev + 1);
+    console.log(songs.length !== 0, songs.length - 1 > index);
+
+    if (songs.length !== 0 && songs.length - 1 > index)
+      setIndex((prev) => prev + 1);
   }
 
-  function handleKeyPress(event: { key: string }) {
-    if (event.key === "Enter") {
-      console.log("enter press here! ");
-    }
+  function press(key: any) {
+    if (key === "ArrowRight" || key === "d") songAdded();
+    else if (key === "ArrowLeft" || key === "w") songRefused();
   }
+
+  useEffect(() => {
+    window.addEventListener("keydown", press);
+
+    return () => {
+      window.removeEventListener("keydown", press);
+    };
+  }, []);
 
   function pauseAudio() {
     pause();
@@ -133,9 +145,5 @@ export default function MusicPlayer({
     );
   }
 
-  return (
-    <div className="music-player" onKeyPress={handleKeyPress}>
-      {musicPlayerElement}
-    </div>
-  );
+  return <div className="music-player">{musicPlayerElement}</div>;
 }
