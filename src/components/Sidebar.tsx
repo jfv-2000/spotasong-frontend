@@ -17,14 +17,14 @@ export default function Sidebar({ user }: { user: boolean }) {
     setInputPlaylist(e.target.outerText);
   }
 
-  // useEffect(() => {
-  //   if (user) {
-  //     (async function () {
-  //       const response = await fetch("http://localhost:3000/getUserDetails");
-  //       console.log(await response.json());
-  //     })();
-  //   }
-  // }, []);
+  useEffect(() => {
+    if (user) {
+      (async function () {
+        const response = await fetch("http://localhost:3000/getUserPlaylists");
+        console.log(await response.json());
+      })();
+    }
+  }, []);
 
   return (
     <Box className="sidebar_menu">
