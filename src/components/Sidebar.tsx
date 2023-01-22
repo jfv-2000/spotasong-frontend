@@ -1,5 +1,5 @@
 import { Box, Divider, Switch, Typography } from "@mui/material";
-import { Dispatch, SetStateAction, useEffect, useState } from "react";
+import { ChangeEvent, Dispatch, SetStateAction, useEffect, useState } from "react";
 import { RiCheckFill, RiFilter2Fill, RiPlayListFill } from "react-icons/ri";
 import "./Sidebar.scss";
 
@@ -7,16 +7,18 @@ export default function Sidebar({
   user,
   setToAdd,
   setSongs,
+  checked,
+  handleToggleCamera
 }: {
   user: boolean;
   setSongs: Dispatch<SetStateAction<never[]>>;
   setToAdd: Dispatch<SetStateAction<string>>;
+  checked: boolean;
+  handleToggleCamera: (event: ChangeEvent<HTMLInputElement>) => void;
 }) {
   const [playlists, setPlaylists] = useState([]);
   const [outputPlaylist, setOutputPlaylist] = useState(null);
   const [inputPlaylist, setInputPlaylist] = useState(null);
-
-  const [checked, setChecked] = useState(true);
 
   async function handleOutputPlaylist(e: any) {
     // const response = await fetch("http://localhost:3000/getUserPlaylists");
@@ -27,11 +29,6 @@ export default function Sidebar({
 
   function handleInputPlaylist(e: any) {
     setInputPlaylist(e.target.outerText);
-  }
-
-  function handleToggleCamera(event: React.ChangeEvent<HTMLInputElement>) {
-    setChecked(event.target.checked);
-    console.log(event.target.checked);
   }
 
   useEffect(() => {
@@ -50,10 +47,14 @@ export default function Sidebar({
 
   return (
     <Box className="sidebar_menu">
-        <Box className="sidebar_header">
-        <img src="/src/assets/logo.png" className="sidebar_logo" />
-        <Typography className="sidebar_name">Spot-A-Song</Typography>
-        <Switch defaultChecked checked={checked} onChange={handleToggleCamera} />
+      <Box className="sidebar_header">
+        <Box className="sidebar_title">
+          <img src="/src/assets/logo.png" className="sidebar_logo" />
+          <Typography className="sidebar_name">Spot-A-Song</Typography>
+        </Box>
+        <Box>
+          <Switch defaultChecked checked={checked} onChange={handleToggleCamera} />
+        </Box>
       </Box>
       <Box className="sidebar_body">
         <Box className="sidebar_section">

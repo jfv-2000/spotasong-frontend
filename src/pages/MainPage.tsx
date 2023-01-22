@@ -13,6 +13,8 @@ export default function MainPage({ user }: { user: boolean }) {
 
   const webcamRef = React.useRef(null);
   const [imgSrc, setImgSrc] = useState("");
+  const [checked, setChecked] = useState(true);
+  const [event, setEvent] = useState<React.ChangeEvent<HTMLInputElement> | null>(null);
 
   function getEmotion() {
     capture();
@@ -39,12 +41,18 @@ export default function MainPage({ user }: { user: boolean }) {
   //   return () => clearInterval(interval); // This represents the unmount function, in which you need to clear your interval to prevent memory leaks.
   // }, [])
 
+  function handleToggleCamera(event: React.ChangeEvent<HTMLInputElement>) {
+    setChecked(event.target.checked);
+    setEvent(event);
+
+    console.log("toggleOn", event.target.checked);
+  }
   
   return (
     <div className="main-page">
-      <Sidebar user={user} setSongs={setSongs} setToAdd={setToAdd} />
+      <Sidebar user={user} setSongs={setSongs} setToAdd={setToAdd} checked={checked} handleToggleCamera={handleToggleCamera}/>
       <MusicPlayer user={user} songs={songs} toAdd={toAdd} />
-      <Box hidden={true}>
+      { (checked ? (<Box hidden={true}>
         <HiddenWebcamImage />
         <Webcam
           mirrored
@@ -54,7 +62,8 @@ export default function MainPage({ user }: { user: boolean }) {
         />
         <button onClick={getEmotion}>Capture photo</button>
         {imgSrc && <img src={imgSrc} />}
-      </Box>
+      </Box>) : (<></>))}
+      
     </div>
   );
 }
