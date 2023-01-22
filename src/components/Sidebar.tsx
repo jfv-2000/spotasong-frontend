@@ -4,7 +4,7 @@ import {
   Dispatch,
   SetStateAction,
   useEffect,
-  useState
+  useState,
 } from "react";
 import { BiCameraHome } from "react-icons/bi";
 import { RiCheckFill, RiFilter2Fill, RiPlayListFill } from "react-icons/ri";
@@ -72,7 +72,7 @@ export default function Sidebar({
     <Box className="sidebar_menu">
       <Box className="sidebar_header">
         <Box className="sidebar_title">
-          <img src="/src/assets/logo.png" className="sidebar_logo" />
+          <img src="https://i.imgur.com/4md1ReN.png" className="sidebar_logo" />
           <Typography className="sidebar_name">Spot-A-Song</Typography>
         </Box>
         <Box display="flex" alignItems="center">
