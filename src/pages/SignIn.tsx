@@ -1,6 +1,6 @@
 import Logo from "../components/Logo";
 import { BsSpotify } from "react-icons/bs";
-import { Box, Button, Modal } from "@mui/material";
+import { Button } from "@mui/material";
 import Typography from "@mui/material/Typography";
 import "./SignIn.scss";
 

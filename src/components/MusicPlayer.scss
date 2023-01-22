@@ -35,9 +35,10 @@
 
 .controls {
   display: flex;
-  justify-content: center;
+  justify-content: space-around;
   width: 400px;
   align-items: center;
+  gap: 20px;
   .control-buttons {
     color: #131313;
     width: 40px;
@@ -47,20 +48,20 @@
     border-radius: 50%;
     padding: 10px;
     margin: 0px 15px;
-    &:hover{
+    &:hover {
       cursor: pointer;
       background-color: rgb(230, 230, 230);
     }
   }
 
-  .play-button{
+  .play-button {
     width: 30px;
     height: 30px;
     color: white;
     border-radius: 50%;
     padding: 10px;
     // border: 1px white solid;
-    &:hover{
+    &:hover {
       background-color: #242424;
       cursor: pointer;
     }
