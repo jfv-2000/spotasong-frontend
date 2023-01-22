@@ -23,7 +23,7 @@ export default function Sidebar() {
 
   return (
     <Box className="sidebar_menu">
-      <Box className="sidebar_header">
+        <Box className="sidebar_header">
         <img src="/src/assets/logo.png" className="sidebar_logo" />
         <Typography className="sidebar_name">Spot-A-Song</Typography>
       </Box>
